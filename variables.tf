@@ -51,6 +51,11 @@ variable "appgw_subnet_addr_prefix" {
   description = "Application Gateway Subnet Address Prefix"
 }
 
+variable "ssl_cert_file" {
+  type        = "string"
+  description = "SSL Certificate PFX file path"
+}
+
 variable "ssl_cert_password" {
   type        = "string"
   description = "SSL Certificate Password"
