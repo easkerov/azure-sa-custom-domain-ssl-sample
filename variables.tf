@@ -28,6 +28,11 @@ variable "deployment_region" {
   description = "Region"
 }
 
+variable "storage_account_name" {
+  type        = "string"
+  description = "Storage Account Name"
+}
+
 variable "storage_domain_name" {
   type = "string"
 }

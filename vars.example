@@ -17,6 +17,8 @@ deployment_region = "eastus"
 
 storage_domain_name = "example.com"
 
+storage_account_name = "mystorageaccount"
+
 custom_domain_name = "www.myportal.com"
 
 ssl_cert_password = ""

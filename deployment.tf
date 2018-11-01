@@ -6,7 +6,7 @@ resource "azurerm_resource_group" "resource_group" {
 
 # Storage Account
 resource "azurerm_storage_account" "static_content_storage_account" {
-  name                     = "teststaticsa51298"
+  name                     = "${var.storage_account_name}"
   resource_group_name      = "${azurerm_resource_group.resource_group.name}"
   location                 = "${var.deployment_region}"
   account_kind             = "StorageV2"
