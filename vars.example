@@ -1,0 +1,22 @@
+
+subscription_id = ""
+
+client_id       = ""
+
+client_secret   = ""
+
+tenant_id       = ""
+
+resource_group_name  = "storage-static-test-rg"
+
+virtual_network_address_space = ["172.16.0.0/12"]
+
+appgw_subnet_addr_prefix = "172.16.1.0/24"
+
+deployment_region = "eastus"
+
+storage_domain_name = "example.com"
+
+custom_domain_name = "www.myportal.com"
+
+ssl_cert_password = ""
