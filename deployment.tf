@@ -42,7 +42,7 @@ resource "azurerm_public_ip" "appgw_public_ip" {
   location                     = "${var.deployment_region}"
   resource_group_name          = "${azurerm_resource_group.resource_group.name}"
   domain_name_label            = "demo-storage"
-  public_ip_address_allocation = "Dynamic"
+  allocation_method            = "Dynamic"
 }
 
 # Create an application gateway
@@ -91,7 +91,7 @@ resource "azurerm_application_gateway" "appgw" {
   # Backend pool
   backend_address_pool {
     name            = "frontend-backend-pool"
-    ip_address_list = ["${var.storage_domain_name}"]
+    fqdns           = ["${var.storage_domain_name}"]
   }
 
   # HTTP Settings for Static Content
