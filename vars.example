@@ -16,7 +16,7 @@ appgw_subnet_addr_prefix = "172.16.1.0/24"
 
 deployment_region = "eastus"
 
-storage_domain_name = "example.com"
+storage_domain_name = "example.com" # needs to be copied from the storage account static web site after the 1st run
 
 storage_account_name = "mystorageaccount"
 
