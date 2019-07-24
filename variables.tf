@@ -37,6 +37,11 @@ variable "storage_domain_name" {
   type = "string"
 }
 
+variable "public_ip_dns_name" {
+  type        = "string"
+  description = "Public IP DNS Name"
+}
+
 variable "custom_domain_name" {
   type = "string"
 }

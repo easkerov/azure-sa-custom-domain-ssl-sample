@@ -13,9 +13,14 @@ resource "azurerm_storage_account" "static_content_storage_account" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
   access_tier              = "Hot"
+  enable_https_traffic_only = true
 
   network_rules {
     virtual_network_subnet_ids = ["${azurerm_subnet.appgw_subnet.id}"]
+  }
+
+  provisioner "local-exec" {
+    command = "az storage blob service-properties update --account-name ${var.storage_account_name} --subscription ${var.subscription_id} --static-website  --index-document index.html --404-document 404.html"
   }
 }
 
@@ -39,10 +44,11 @@ resource "azurerm_subnet" "appgw_subnet" {
 # Public IP for Application Gateway
 resource "azurerm_public_ip" "appgw_public_ip" {
   name                         = "app-gw-public-ip"
+  sku                          = "Standard"
   location                     = "${var.deployment_region}"
   resource_group_name          = "${azurerm_resource_group.resource_group.name}"
-  domain_name_label            = "demo-storage"
-  allocation_method            = "Dynamic"
+  domain_name_label            = "${var.public_ip_dns_name}"
+  allocation_method            = "Static"
 }
 
 # Create an application gateway
@@ -52,9 +58,9 @@ resource "azurerm_application_gateway" "appgw" {
   location            = "${var.deployment_region}"
 
   sku {
-    name     = "Standard_Small"
-    tier     = "Standard"
-    capacity = 1
+    name     = "Standard_v2"
+    tier     = "Standard_v2"
+    capacity = 2
   }
 
   ssl_certificate {
@@ -94,19 +100,20 @@ resource "azurerm_application_gateway" "appgw" {
     fqdns           = ["${var.storage_domain_name}"]
   }
 
-  # HTTP Settings for Static Content
+  # HTTPS Settings for Static Content
   backend_http_settings {
     name                  = "frontend-http-settings"
     cookie_based_affinity = "Disabled"
-    port                  = 80
-    protocol              = "Http"
+    port                  = 443
+    protocol              = "Https"
     request_timeout       = 30
     probe_name            = "frontend-probe"
+    pick_host_name_from_backend_address = true
   }
 
   probe {
     name                = "frontend-probe"
-    protocol            = "Http"
+    protocol            = "Https"
     path                = "/"
     host                = "${var.storage_domain_name}"
     interval            = 10
