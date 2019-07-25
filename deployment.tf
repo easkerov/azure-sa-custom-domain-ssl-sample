@@ -23,9 +23,9 @@ resource "azurerm_storage_account" "static_content_storage_account" {
 
   provisioner "local-exec" {
     command = <<EOF
-              az storage blob service-properties update --account-name ${var.storage_account_name} --subscription ${var.subscription_id} --static-website  --index-document index.html --404-document 404.html;
-              az storage blob upload --account-name ${var.storage_account_name} --subscription ${var.subscription_id} --container-name '$web' --file index.html --name index.html;
-              az storage blob upload --account-name ${var.storage_account_name} --subscription ${var.subscription_id} --container-name '$web' --file 404.html --name 404.html
+              az storage blob service-properties update --account-name ${var.storage_account_name} --subscription ${var.subscription_id} --static-website  --index-document index.html --404-document 404.html
+              sleep 120
+              az storage blob sync -c '$web' --account-name mogastorageaccountsec -s "./site"
               EOF
   }
 }
