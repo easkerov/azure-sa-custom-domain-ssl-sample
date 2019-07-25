@@ -16,6 +16,7 @@ resource "azurerm_storage_account" "static_content_storage_account" {
   enable_https_traffic_only = true
 
   network_rules {
+    default_action             = "Deny"
     virtual_network_subnet_ids = ["${azurerm_subnet.appgw_subnet.id}"]
   }
 
