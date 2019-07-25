@@ -17,11 +17,16 @@ resource "azurerm_storage_account" "static_content_storage_account" {
 
   network_rules {
     default_action             = "Deny"
+    ip_rules                   = ["${var.my_client_public_ip}"]
     virtual_network_subnet_ids = ["${azurerm_subnet.appgw_subnet.id}"]
   }
 
   provisioner "local-exec" {
-    command = "az storage blob service-properties update --account-name ${var.storage_account_name} --subscription ${var.subscription_id} --static-website  --index-document index.html --404-document 404.html"
+    command = <<EOF
+              az storage blob service-properties update --account-name ${var.storage_account_name} --subscription ${var.subscription_id} --static-website  --index-document index.html --404-document 404.html;
+              az storage blob upload --account-name ${var.storage_account_name} --subscription ${var.subscription_id} --container-name '$web' --file index.html --name index.html;
+              az storage blob upload --account-name ${var.storage_account_name} --subscription ${var.subscription_id} --container-name '$web' --file 404.html --name 404.html
+              EOF
   }
 }
 
@@ -33,6 +38,40 @@ resource "azurerm_virtual_network" "virtual_network" {
   resource_group_name = "${azurerm_resource_group.resource_group.name}"
 }
 
+# NSG for the app gateway
+resource "azurerm_network_security_group" "appgwnsg" {
+  name                = "appgwnsg"
+  location            = "${var.deployment_region}"
+  resource_group_name = "${azurerm_resource_group.resource_group.name}"
+
+  security_rule {
+    name                       = "appgw"
+    priority                   = 1000
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "65200-65535"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+}
+
+# NSG rule to allow all Inbound connections for testing, but can be changed as needed
+resource "azurerm_network_security_rule" "appgwnsgrule" {
+  name                        = "allowhttps"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "443"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.appgwnsg.name}"
+}
+
 # Application Gateway Subnet
 resource "azurerm_subnet" "appgw_subnet" {
   name                 = "appgw-subnet"
@@ -40,6 +79,12 @@ resource "azurerm_subnet" "appgw_subnet" {
   virtual_network_name = "${azurerm_virtual_network.virtual_network.name}"
   address_prefix       = "${var.appgw_subnet_addr_prefix}"
   service_endpoints    = ["Microsoft.Storage"]
+}
+
+# associate the NSG to the appgw subnet
+resource "azurerm_subnet_network_security_group_association" "nsgappgwsubnet" {
+  subnet_id                 = "${azurerm_subnet.appgw_subnet.id}"
+  network_security_group_id = "${azurerm_network_security_group.appgwnsg.id}"
 }
 
 # Public IP for Application Gateway

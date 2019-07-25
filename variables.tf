@@ -65,3 +65,8 @@ variable "ssl_cert_password" {
   type        = "string"
   description = "SSL Certificate Password"
 }
+
+variable "my_client_public_ip" {
+  type        = "string"
+  description = "Your Public IP to be allowed on the Storage account"
+}

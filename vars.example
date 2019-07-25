@@ -27,3 +27,5 @@ custom_domain_name = "www.myportal.com"
 ssl_cert_file = "mycert.pfx"
 
 ssl_cert_password = ""
+
+my_client_public_ip = "" # This is your client IP to be able to see and access the Storage Account, you can get it from www.whatismyip.com
