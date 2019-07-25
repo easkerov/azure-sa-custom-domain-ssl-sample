@@ -65,7 +65,7 @@ resource "azurerm_application_gateway" "appgw" {
 
   ssl_certificate {
     name     = "ssl-cert"
-    data     = "${base64encode(file("${var.ssl_cert_file}"))}"
+    data     = "${filebase64("${var.ssl_cert_file}")}"
     password = "${var.ssl_cert_password}"
   }
 

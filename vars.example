@@ -20,6 +20,8 @@ storage_domain_name = "example.com" # needs to be copied from the storage accoun
 
 storage_account_name = "mystorageaccount"
 
+public_ip_dns_name = "mogav2"
+
 custom_domain_name = "www.myportal.com"
 
 ssl_cert_file = "mycert.pfx"
