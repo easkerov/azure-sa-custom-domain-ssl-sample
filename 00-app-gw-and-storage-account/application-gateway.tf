@@ -7,7 +7,7 @@ resource "azurerm_user_assigned_identity" "appgwidentity" {
 
 # Create an application gateway
 resource "azurerm_application_gateway" "appgw" {
-  name                = "application-gateway"
+  name                = "${var.app_gw_name}"
   resource_group_name = "${azurerm_resource_group.resource_group.name}"
   location            = "${var.deployment_region}"
   identity {

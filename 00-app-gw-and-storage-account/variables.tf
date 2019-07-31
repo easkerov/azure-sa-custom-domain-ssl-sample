@@ -18,7 +18,7 @@ variable "tenant_id" {
   description = "Azure Tenant Id"
 }
 
-variable "appgw_resource_group_name" {
+variable "appgw_resource_group" {
   type        = "string"
   description = "Azure Resource Group Name"
 }
@@ -40,6 +40,20 @@ variable "storage_domain_name" {
 variable "public_ip_dns_name" {
   type        = "string"
   description = "Public IP DNS Name"
+}
+
+variable "app_gw_name" {
+  type        = "string"
+  description = "Name of the application gateway resource"
+}
+variable "virtual_network_name" {
+  type        = "string"
+  description = "Name of the vnet resource"
+}
+
+variable "public_ip_resource_name" {
+  type        = "string"
+  description = "Public IP Resource Name"
 }
 
 variable "public_dns_record" {

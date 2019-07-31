@@ -1,6 +1,6 @@
 # Virtual Network
 resource "azurerm_virtual_network" "virtual_network" {
-  name                = "test-vnet"
+  name                = "${var.virtual_network_name}"
   address_space       = "${var.virtual_network_address_space}"
   location            = "${var.deployment_region}"
   resource_group_name = "${azurerm_resource_group.resource_group.name}"
@@ -57,7 +57,7 @@ resource "azurerm_subnet_network_security_group_association" "nsgappgwsubnet" {
 
 # Public IP for Application Gateway
 resource "azurerm_public_ip" "appgw_public_ip" {
-  name                         = "app-gw-public-ip"
+  name                         = "${var.public_ip_resource_name}"
   sku                          = "Standard"
   location                     = "${var.deployment_region}"
   resource_group_name          = "${azurerm_resource_group.resource_group.name}"

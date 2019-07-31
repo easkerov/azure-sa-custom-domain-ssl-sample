@@ -10,17 +10,23 @@ tenant_id       = ""
 
 appgw_resource_group_name  = "app-gw-static-ww-prod-rg"
 
+virtual_network_name = ""
+
 virtual_network_address_space = ["172.16.0.0/12"]
 
 appgw_subnet_addr_prefix = "172.16.1.0/24"
 
-deployment_region = "eastus"
+deployment_region = "westeurope"
 
 storage_domain_name = "example.com" # needs to be copied from the storage account static web site after the 1st run
 
 storage_account_name = "mystorageaccount"
 
+app_gw_name = ""
+
 public_ip_dns_name = "mogav2"
+
+public_ip_resource_name = ""
 
 dns_zone_name = "myportal.com"
 
