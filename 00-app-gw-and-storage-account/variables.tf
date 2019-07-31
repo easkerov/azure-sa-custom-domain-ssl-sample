@@ -18,7 +18,7 @@ variable "tenant_id" {
   description = "Azure Tenant Id"
 }
 
-variable "resource_group_name" {
+variable "appgw_resource_group_name" {
   type        = "string"
   description = "Azure Resource Group Name"
 }
@@ -42,8 +42,13 @@ variable "public_ip_dns_name" {
   description = "Public IP DNS Name"
 }
 
-variable "custom_domain_name" {
+variable "public_dns_record" {
   type = "string"
+}
+
+variable "dns_zone_name" {
+  type = "string"
+  description = "The domain name which will be created as a DNS zone for the app gateway"
 }
 
 variable "virtual_network_address_space" {
@@ -69,4 +74,9 @@ variable "ssl_cert_password" {
 variable "my_client_public_ip" {
   type        = "string"
   description = "Your Public IP to be allowed on the Storage account"
+}
+
+variable "user_managed_identity" {
+  type        = "string"
+  description = "This will be the managed identity used by the AppGW to access the Keyvault"
 }

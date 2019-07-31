@@ -8,7 +8,7 @@ client_secret   = ""
 
 tenant_id       = ""
 
-resource_group_name  = "storage-static-test-rg"
+appgw_resource_group_name  = "app-gw-static-ww-prod-rg"
 
 virtual_network_address_space = ["172.16.0.0/12"]
 
@@ -22,10 +22,14 @@ storage_account_name = "mystorageaccount"
 
 public_ip_dns_name = "mogav2"
 
-custom_domain_name = "www.myportal.com"
+dns_zone_name = "myportal.com"
+
+public_dns_record = "www"
 
 ssl_cert_file = "mycert.pfx"
 
 ssl_cert_password = ""
 
 my_client_public_ip = "" # This is your client IP to be able to see and access the Storage Account, you can get it from www.whatismyip.com
+
+user_managed_identity = "moga-user_managed_identity" # This will be for the appGW to access the KeyVault
