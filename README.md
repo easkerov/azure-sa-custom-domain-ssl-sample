@@ -13,7 +13,7 @@ Please keep the following in mind:
 Below is the diagram explaning what you will get: 
 ![alt text][Azure static web site diagram]
 
-[Azure static web site diagram]: imgs/giagram.jpg "Azure static web site diagram"
+[Azure static web site diagram]: ./imgs/diagram.jpg "Azure static web site diagram"
 
 ## Installation
 
