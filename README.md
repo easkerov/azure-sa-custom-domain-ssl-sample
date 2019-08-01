@@ -52,6 +52,6 @@ The Application gateway does support reading the certificate from the Keyvault d
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
 
-###ref:
+### ref:
 https://medium.com/@emin.askerov/static-website-hosting-in-azure-storage-with-custom-domain-and-ssl-support-using-azure-application-b17f95c6764c
 
