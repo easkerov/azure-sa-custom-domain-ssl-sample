@@ -5,6 +5,17 @@ This is the Terraform code needed to build a fully functional static web site ho
 If you need a DNS and a Keyvault you can run the code under 00-.. folder first.
 
 Please keep the following in mind:
+- The vNET has a service end point to communicate with the App Gateway directly
+- The storage account firewall has "deny all" by default, if you didn't add your IP in the var file, you won't be able to access it
+- The App Gateway subnet is behind a NSG which also have only the needed ports opened
+- HTTPS is enforced both between the end user and the App Gateway and between the Storage and the App Gateway 
+
+Below is the diagram explaning what you will get: 
+![alt text][Azure static web site diagram]
+
+[Azure static web site diagram]: imgs/giagram.jpg "Azure static web site diagram"
+
+## Installation
 
 - You need to add a CNAME DNS Record pointing to the Public IP DNS label
 - You need to have a valid SSL certificate matching your domain name
@@ -14,7 +25,7 @@ Please keep the following in mind:
 - Make sure your have a storage account to store your state file
 - Review the file terraform.tf and add your storage account name to host the state file
 
-## Installation
+## Usage
 
 Make sure you have Terraform >=0.12.5 and azurerm >=1.32.1
 
@@ -25,8 +36,6 @@ after the installation run the following command two times, under 00-.. and 01-.
 ```bash
 terraform init
 ```
-
-## Usage
 
 under each of both 00-.. and 01-.. folders run the following.
 

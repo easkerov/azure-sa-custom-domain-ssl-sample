@@ -17,11 +17,7 @@ resource "azurerm_storage_account" "static_content_storage_account" {
 
   provisioner "local-exec" {
     command = <<EOF
-              sleep 120
-              echo "############################################################"
               az storage blob service-properties update --account-name ${var.storage_account_name} --subscription ${var.subscription_id} --static-website  --index-document index.html --404-document 404.html
-              sleep 120
-              echo "############################################################"
               az storage blob sync -c '$web' --account-name mogastorageaccountsec -s "../site"
               EOF
   }
