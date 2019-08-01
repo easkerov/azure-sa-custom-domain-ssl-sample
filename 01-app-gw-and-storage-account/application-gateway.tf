@@ -1,6 +1,6 @@
 # Create a managed identity to be used to access the certificate in the KeyVault
 resource "azurerm_user_assigned_identity" "appgwidentity" {
-  name = "${var.user_managed_identity}"
+  name                = "${var.user_managed_identity}"
   resource_group_name = "${azurerm_resource_group.resource_group.name}"
   location            = "${var.deployment_region}"
 }
@@ -12,7 +12,7 @@ resource "azurerm_application_gateway" "appgw" {
   location            = "${var.deployment_region}"
   identity {
     identity_ids = ["${azurerm_user_assigned_identity.appgwidentity.id}"]
-  }        
+  }
 
   sku {
     name     = "Standard_v2"
@@ -21,9 +21,8 @@ resource "azurerm_application_gateway" "appgw" {
   }
 
   ssl_certificate {
-    name     = "ssl-cert"
-    data     = "${filebase64("${var.ssl_cert_file}")}" # terraform 0.12
-    #data     = "${base64encode(file("${var.ssl_cert_file}"))}" # terraform 0.11
+    name = "ssl-cert"
+    data = "${filebase64("${var.ssl_cert_file}")}"
     password = "${var.ssl_cert_password}"
   }
 
@@ -54,26 +53,26 @@ resource "azurerm_application_gateway" "appgw" {
 
   # Backend pool
   backend_address_pool {
-    name            = "frontend-backend-pool"
-    fqdns           = ["${var.storage_domain_name}"]
+    name  = "frontend-backend-pool"
+    fqdns = ["${var.storage_domain_name}"]
   }
 
   # HTTPS Settings for Static Content
   backend_http_settings {
-    name                  = "frontend-http-settings"
-    cookie_based_affinity = "Disabled"
-    port                  = 443
-    protocol              = "Https"
-    request_timeout       = 30
-    probe_name            = "frontend-probe"
+    name                                = "frontend-http-settings"
+    cookie_based_affinity               = "Disabled"
+    port                                = 443
+    protocol                            = "Https"
+    request_timeout                     = 30
+    probe_name                          = "frontend-probe"
     pick_host_name_from_backend_address = true
   }
 
   probe {
-    name                = "frontend-probe"
-    protocol            = "Https"
-    path                = "/"
-    host                = "${var.storage_domain_name}"
+    name                                      = "frontend-probe"
+    protocol                                  = "Https"
+    path                                      = "/"
+    pick_host_name_from_backend_http_settings = true
     interval            = 10
     timeout             = 30
     unhealthy_threshold = 3

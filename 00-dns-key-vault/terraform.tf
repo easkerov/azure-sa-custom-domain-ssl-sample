@@ -13,4 +13,8 @@ terraform {
     container_name       = "terraformstate"
     key                  = "foundation.terraform.tfstate"
   }
+  required_version = ">= 0.12.5"
+  required_providers {
+    azurerm = ">= 1.32.1"
+  }
 }

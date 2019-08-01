@@ -57,10 +57,10 @@ resource "azurerm_subnet_network_security_group_association" "nsgappgwsubnet" {
 
 # Public IP for Application Gateway
 resource "azurerm_public_ip" "appgw_public_ip" {
-  name                         = "${var.public_ip_resource_name}"
-  sku                          = "Standard"
-  location                     = "${var.deployment_region}"
-  resource_group_name          = "${azurerm_resource_group.resource_group.name}"
-  domain_name_label            = "${var.public_ip_dns_name}"
-  allocation_method            = "Static"
+  name                = "${var.public_ip_resource_name}"
+  sku                 = "Standard"
+  location            = "${var.deployment_region}"
+  resource_group_name = "${azurerm_resource_group.resource_group.name}"
+  domain_name_label   = "${var.public_ip_dns_name}"
+  allocation_method   = "Static"
 }
