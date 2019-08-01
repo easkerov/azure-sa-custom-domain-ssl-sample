@@ -5,3 +5,12 @@ provider "azurerm" {
   #client_secret   = "${var.client_secret}"
   tenant_id       = "${var.tenant_id}"
 }
+
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "moga-ca-rg"
+    storage_account_name = "mogaterraform"
+    container_name       = "terraformstate"
+    key                  = "appgw.terraform.tfstate"
+  }
+}

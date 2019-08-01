@@ -38,21 +38,20 @@ variable "public_ip_dns_name" {
   description = "The Public DNS Name which will be assosiated with the Public IP"
 }
 
-variable "public_dns_record" {
-  type = "string"
-  description = "This the a public dns record used by the final users e.g. www"
-}
-
 variable "dns_zone_name" {
   type = "string"
   description = "The domain name which will be created as a DNS zone for the app gateway"
+}
+
+variable "public_dns_record" {
+  type = "string"
+  description = "This the a public dns record used by the final users e.g. www"
 }
 
 variable "key_vault_name" {
   type = "string"
   description = "The keyvault name"
 }
-
 
 variable "user_managed_identity" {
   type        = "string"

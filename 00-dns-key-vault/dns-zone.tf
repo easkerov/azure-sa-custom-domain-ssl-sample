@@ -10,3 +10,5 @@ resource "azurerm_dns_cname_record" "appcnamerecord" {
   ttl                 = 300
   record              = "${var.public_ip_dns_name}.${var.deployment_region}.cloudapp.azure.com" #This should point to the appGW Public IP DNS Name.
 }
+
+#TODO: create the record in the 01-app repo.
